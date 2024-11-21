@@ -117,7 +117,7 @@ section .data
     ; creating the global variables
     msg: db "Enter a number: ", 0
     msg2: db "Looping %d of %d", 10, 0
-    format: db "%d".0
+    format: db "%d", 0
 
 section .bss
     number resb 4
