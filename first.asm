@@ -83,14 +83,30 @@ main:
 
     ; body
     ; prompt the user to enter number
-    xor eax, eax        ; clear RAX for variadic functions
+    xor rax, rax        ; clear RAX for variadic functions
     lea rdi, [msg]      ; first param
     call printf
     ; taking user input
-    mov eax, 0          ; clear RAX
+    mov rax, 0          ; clear RAX
     mov rdi, format     ; RDI is always the first parameter
     mov rsi, number     ; Set storage to address of x
     call scanf
+    ; setting i to 0
+    mov DWORD   [rbp - 4], 0     ; local variable
+    ; creating loop
+loop:
+    mov edx, [number]
+    mov rsi, [rbp - 4]
+    lea rdi, [msg2]
+    xor rax, rax
+    call printf
+
+    ; increment i + 1
+    mov rcx, DWORD [number]
+    add DWORD [rbp - 4], 1
+
+    cmp [rbp - 4], rcx          ; compare i [rbp -4] with ecx[number]
+    jle loop                    ; jump if i < number
 
     ; Closing function
     add rsp, 16
